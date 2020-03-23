@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% extends 'first/base.html' %}
+
+{% block content %}
+    <div class="post">
+         {% if post.published_date %}
+            <div class="date">
+                등록일자 : {{ post.published_date }}
+            </div>
+        {% endif %}
+        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <p> 이름 : {{ post.title }}</p>
+        <p> 설명 : {{ post.text|linebreaksbr }} </p>
+<!--        <h2>이름 : <input id="title" type="text" name="post_title" value={{ post.title }}></h2>-->
+<!--        <h2>설명 : <input id="text" type="text" name="post_text" value={{ post.text|linebreaksbr }}></h2></br>-->
+
+
+    </div>
+{% endblock %}
+
+</body>
+</html>

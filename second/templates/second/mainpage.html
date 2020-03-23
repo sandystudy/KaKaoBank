@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>카카오맵</title>
+</head>
+<body>
+    {% extends 'second/base.html' %}
+    {% block content %}
+
+
+    <a> <input type="button"  value="맛집목록" onClick="location.href='{% url 'success' %}'"></input> </a> <br>
+
+
+    <div id="map" style="width:500px;height:400px;"></div>
+
+<!--     <form method="POST" class="MapForm">{% csrf_token %}-->
+<!--        {{ form.as_p }}-->
+<!--        <button type="submit" class="save btn btn-default">Save</button>-->
+<!--    </form>-->
+
+    <form method="POST"  class="success">
+        {% csrf_token %}
+
+        <label for="title">■ 이름 : </label>
+        <input type="text"  id="title" name="title" value="{{ title }}" />
+        <br>
+        <label for="text">■ 설명 : </label>
+        <input type="text" id="text" name="text" value="{{ text }}" />
+        <br>
+        ■ 위도  <div id="clickLat"  name="lat" value="{{ lat }}"></div>
+        ■ 경도  <div id="clicklng"  name="long" value="{{ long }}"></div>
+        <br>
+
+
+       <button type="submit" class="save btn btn-default" >등록하기</button>
+
+    </form>
+
+
+
+
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4047994dae5f156e4a47f71f7d406a4f&libraries=services"></script>
+    <script>
+        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(37.401297, 127.108592), //지도의 중심좌표.
+            level: 3 //지도의 레벨(확대, 축소 정도)
+        };
+
+        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+
+        // 마커가 표시될 위치입니다
+        var markerPosition  = new kakao.maps.LatLng(37.401297, 127.108592);
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            position: markerPosition
+        });
+
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
+
+        // 지도에 클릭 이벤트를 등록합니다
+        // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+        kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+            // 클릭한 위도, 경도 정보를 가져옵니다
+            var latlng = mouseEvent.latLng;
+
+            // 마커 위치를 클릭한 위치로 옮깁니다
+            marker.setPosition(latlng);
+
+            var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+            message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+            var lat = latlng.getLat();  //위도
+            var lng = latlng.getLng();  //경도
+
+            var resultDiv1 = document.getElementById('clickLat');
+            var resultDiv2 = document.getElementById('clicklng');
+            resultDiv1.innerHTML = lat;
+            resultDiv2.innerHTML = lng;
+
+        });
+
+    </script>
+
+    {% endblock %}
+</body>
+</html>

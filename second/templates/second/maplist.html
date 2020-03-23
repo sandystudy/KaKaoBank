@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% extends 'second/base.html' %}
+
+
+
+    {% block content %}
+
+         <a> <input type="button"  value="맛집등록하기" onClick="location.href='{% url 'map_new' %} '"></input><br> </a>
+         <br>
+        <h2>맛집목록</h2>
+        <p>==============================================</p>
+        {% for Kakaomap in Kmap %}
+        <div>
+            <p>■ 식당이름 : {{ Kakaomap.title }}</p>
+            <p>■ 설명 : {{ Kakaomap.text|linebreaksbr }}</p>
+            <p>■ 작성일시 : {{ Kakaomap.published_date }}</p>
+            <p>■ 위도 : {{ Kakaomap.lat }} </p>
+            <p>■ 경도 : {{ Kakaomap.long }}</p>
+            <p>==============================================</p>
+        </div>
+        {% endfor %}
+    {% endblock %}
+
+
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YTC PAGE</title>
+</head>
+<body>
+
+
+
+{% extends 'first/base.html' %}
+
+{% block content %}
+    <h1>메뉴</h1><br>
+    <input type="button"  value="신규등록" onClick="location.href='post/new'"></input><br><br>
+
+    <table border="2" bordercolor="black" >
+
+    <th bgcolor="#A4A4A4" style="color:white">게시일</th>
+    <th bgcolor="#A4A4A4" style="color:white">이름</th>
+    <th bgcolor="#A4A4A4" style="color:white">설명</th>
+
+         {% for post in posts %}
+            <div class="post">
+            <tr align ="left">
+            <td>
+                <div class="date">{{ post.published_date }}</div>
+            </div>
+            </td>
+            <td align="center">
+                <h3><a href="{% url 'post_detail' pk=post.pk %}"> {{ post.title }}</a></h3>
+            </td>
+            <td align="left" width ="250">
+                <p>{{ post.text|linebreaksbr }}</p>
+            </td>
+            </tr>
+            </div>
+         {% endfor %}
+    </table>
+
+{% endblock %}
+
+</body>
+</html>
